@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using SMM.Addons.Addon_BaseProject_Controls;
 
 namespace SMM.Addons
 {
@@ -15,6 +16,8 @@ namespace SMM.Addons
 
         ToolStripMenuItem deleteContextStripMenuItem = new ToolStripMenuItem();
         ToolStripMenuItem closeProjectContextStripMenuItem = new ToolStripMenuItem();
+
+        TreeNode lastNode;
 
         #region Base Addon
 
@@ -113,13 +116,20 @@ namespace SMM.Addons
         {
             if (!(projectTreeView.SelectedNode.ImageIndex == 0))
             {
+                ClosePanelControls();
+                lastNode = projectTreeView.SelectedNode;
+
                 if (projectTreeView.SelectedNode.Text.EndsWith(".txt"))
                 {
-                    MessageBox.Show("Text file", "Replace me, please");
+                    var tb = new Addon_BaseProject_Controls.TextEditor(Addon_BaseControls.treeView.SelectedNode.FullPath);
+                    Addon_BaseControls.panel.Controls.Add(tb);
+                    tb.Dock = DockStyle.Fill;
                 }
                 else if (projectTreeView.SelectedNode.Text.EndsWith(".vmt"))
                 {
-                    MessageBox.Show("Material file", "Replace me, please");
+                    var tb = new Addon_BaseProject_Controls.TextEditor(Addon_BaseControls.treeView.SelectedNode.FullPath);
+                    Addon_BaseControls.panel.Controls.Add(tb);
+                    tb.Dock = DockStyle.Fill;
                 }
                 else if (projectTreeView.SelectedNode.Text.EndsWith(".vtf"))
                 {
@@ -142,6 +152,14 @@ namespace SMM.Addons
                 if (n == node)
                     return true;
             return false;
+        }
+
+        void ClosePanelControls()
+        {
+            foreach (IDockedControl d in Addon_BaseControls.panel.Controls)
+                d.Close();
+
+            Addon_BaseControls.panel.Controls.Clear();
         }
 
         #endregion

@@ -107,6 +107,7 @@ namespace SMM.Addons
         {
             splitContainer.Panel2.AutoScroll = true;
             splitContainer.Panel2.BackColor = System.Drawing.Color.White;
+            panel = splitContainer.Panel2;
         }
 
         #endregion
