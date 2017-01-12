@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace SMM.Addons.Addon_BaseProject_Controls
 {
-    public partial class TextEditor : UserControl, IDockedControl
+    public partial class TextEditor : UserControl, IDockableControl
     {
         string FILENAME { get; set; }
         bool IsSaved = true;

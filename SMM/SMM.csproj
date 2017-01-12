@@ -65,7 +65,7 @@
     <Compile Include="Addons\Addon_BaseMenuStripControls.cs" />
     <Compile Include="Addons\Addon_BasePluginLoader.cs" />
     <Compile Include="Addons\Addon_BaseProject.cs" />
-    <Compile Include="Addons\Addon_BaseProject_Controls\IDockedControl.cs" />
+    <Compile Include="Addons\Addon_BaseProject_Controls\IDockableControl.cs" />
     <Compile Include="Addons\Addon_BaseProject_Controls\TextEditor.cs">
       <SubType>UserControl</SubType>
     </Compile>

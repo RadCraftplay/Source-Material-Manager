@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SMM.Addons.Addon_BaseProject_Controls
 {
-    public interface IDockedControl
+    public interface IDockableControl
     {
         void Close();
     }

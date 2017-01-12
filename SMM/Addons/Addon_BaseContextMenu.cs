@@ -156,7 +156,7 @@ namespace SMM.Addons
 
         void ClosePanelControls()
         {
-            foreach (IDockedControl d in Addon_BaseControls.panel.Controls)
+            foreach (IDockableControl d in Addon_BaseControls.panel.Controls)
                 d.Close();
 
             Addon_BaseControls.panel.Controls.Clear();
