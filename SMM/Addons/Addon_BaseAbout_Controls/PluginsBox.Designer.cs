@@ -122,6 +122,7 @@
             this.button2.Size = new System.Drawing.Size(24, 24);
             this.button2.TabIndex = 2;
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Visible = false;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // PluginsBox
