@@ -114,14 +114,34 @@ namespace SMM.Addons
             if (!(projectTreeView.SelectedNode.ImageIndex == 0))
             {
                 if (projectTreeView.SelectedNode.Text.EndsWith(".txt"))
+                {
                     MessageBox.Show("Text file", "Replace me, please");
+                }
                 else if (projectTreeView.SelectedNode.Text.EndsWith(".vmt"))
+                {
                     MessageBox.Show("Material file", "Replace me, please");
+                }
                 else if (projectTreeView.SelectedNode.Text.EndsWith(".vtf"))
+                {
                     MessageBox.Show("Texture file", "Replace me, please");
+                }
                 else
+                {
                     MessageBox.Show("Orther file", "Replace me, please");
+                }
             }
+        }
+
+        #endregion
+
+        #region Utils
+
+        bool IsHeadNode(TreeNode node)
+        {
+            foreach (TreeNode n in projectTreeView.Nodes)
+                if (n == node)
+                    return true;
+            return false;
         }
 
         #endregion
