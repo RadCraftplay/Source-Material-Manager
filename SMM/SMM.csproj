@@ -145,7 +145,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Include="readme.md" />
     <None Include="SMM.licenseheader" />
   </ItemGroup>
   <ItemGroup>
