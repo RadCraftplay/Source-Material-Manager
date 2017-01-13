@@ -8,6 +8,7 @@ _SMM_ makes your textures and materials editing faster!
 * Opening VTF files
 * Editing VMT files
 * Using folders as projects
+* Plugin support
 
 ### TODO
 * Scintilla editor for VMT files
