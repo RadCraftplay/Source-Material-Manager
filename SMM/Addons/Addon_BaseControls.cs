@@ -70,7 +70,7 @@ namespace SMM.Addons
             splitContainer = new SplitContainer()
             {
                 Location = new System.Drawing.Point(12, 27),
-                Size = new System.Drawing.Size(f.Width - 24, f.Height - 77),
+                Size = new System.Drawing.Size(f.Width - 36, f.Height - 77),
                 FixedPanel = FixedPanel.Panel1
             };
             f.Controls.Add(splitContainer);

@@ -5,7 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
 using SMM.Addons.Addon_BaseProject_Controls;
+using System.Drawing;
 
 namespace SMM.Addons
 {
@@ -133,13 +136,66 @@ namespace SMM.Addons
                 }
                 else if (projectTreeView.SelectedNode.Text.EndsWith(".vtf"))
                 {
-                    MessageBox.Show("Texture file", "Replace me, please");
+                    LoadVtf l = new LoadVtf(LoadVTF);
+                    l.Invoke(Addon_BaseControls.treeView.SelectedNode.FullPath);
+
+                    //MessageBox.Show("Texture file", "Replace me, please");
                 }
                 else
                 {
-                    MessageBox.Show("Orther file", "Replace me, please");
+                    //Does nothing
+                    //MessageBox.Show("Orther file", "Replace me, please");
                 }
             }
+        }
+
+        delegate void LoadVtf(string filename);
+
+        unsafe void LoadVTF(string filename)
+        {
+            uint u = new uint();
+
+            VtfLib.vlInitialize();
+            VtfLib.vlCreateImage(&u);
+            VtfLib.vlBindImage(u);
+            VtfLib.vlImageLoad(Addon_BaseControls.treeView.SelectedNode.FullPath, false);
+
+            byte[] lpImageData = new byte[VtfLib.vlImageComputeImageSize(VtfLib.vlImageGetWidth(), VtfLib.vlImageGetHeight(), 1, 1, VtfLib.ImageFormat.ImageFormatRGBA8888)];
+            fixed (byte* lpOutput = lpImageData)
+            {
+                if (!VtfLib.vlImageConvert(VtfLib.vlImageGetData(0, 0, 0, 0), lpOutput, VtfLib.vlImageGetWidth(), VtfLib.vlImageGetHeight(), VtfLib.vlImageGetFormat(), VtfLib.ImageFormat.ImageFormatRGBA8888))
+                {
+                    throw new FormatException(VtfLib.vlGetLastError());
+                }
+            }
+
+            Bitmap b = new Bitmap((int)VtfLib.vlImageGetWidth(), (int)VtfLib.vlImageGetHeight());
+
+            uint uiIndex = 0;
+            for (int y = 0; y < b.Height; y++)
+            {
+                for (int x = 0; x < b.Width; x++)
+                {
+                    byte R = lpImageData[uiIndex++];
+                    byte G = lpImageData[uiIndex++];
+                    byte B = lpImageData[uiIndex++];
+                    byte A = lpImageData[uiIndex++];
+
+                    b.SetPixel(x, y, Color.FromArgb(A, R, G, B));
+                }
+            }
+
+            VtfLib.vlShutdown();
+
+            VTFViewer v = new VTFViewer();
+            Addon_BaseControls.panel.Controls.Add(v);
+            v.Dock = DockStyle.Fill;
+            v.pictureBox1.Image = (Image)b;
+
+            //PictureViewerControl con = new PictureViewerControl();
+            //con.Dock = DockStyle.Fill;
+            //con.pictureBox1.Image = (Image)b;
+            //con.BASE_IMG = (Image)b;
         }
 
         #endregion

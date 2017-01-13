@@ -63,6 +63,16 @@ namespace SMM.Properties {
         /// <summary>
         ///   Wyszukuje zlokalizowany zasób typu System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap alpha_checkers {
+            get {
+                object obj = ResourceManager.GetObject("alpha_checkers", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Wyszukuje zlokalizowany zasób typu System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap property {
             get {
                 object obj = ResourceManager.GetObject("property", resourceCulture);
