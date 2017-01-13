@@ -145,6 +145,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="SMM.licenseheader" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
