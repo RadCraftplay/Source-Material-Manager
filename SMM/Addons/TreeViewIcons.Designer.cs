@@ -103,6 +103,16 @@ namespace SMM.Addons {
         /// <summary>
         ///   Wyszukuje zlokalizowany zasób typu System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap folder_export {
+            get {
+                object obj = ResourceManager.GetObject("folder_export", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Wyszukuje zlokalizowany zasób typu System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap folder_horizontal {
             get {
                 object obj = ResourceManager.GetObject("folder_horizontal", resourceCulture);

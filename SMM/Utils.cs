@@ -50,5 +50,11 @@ namespace SMM
 
             d.Delete();
         }
+
+        public static void cleanupMemory()
+        {
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+        }
     }
 }

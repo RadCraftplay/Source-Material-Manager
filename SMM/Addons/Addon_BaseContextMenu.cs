@@ -27,6 +27,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using SMM.Addons.Addon_BaseProject_Controls;
 using System.Drawing;
+using Ionic.Zip;
 
 namespace SMM.Addons
 {
@@ -37,6 +38,7 @@ namespace SMM.Addons
 
         ToolStripMenuItem deleteContextStripMenuItem = new ToolStripMenuItem();
         ToolStripMenuItem closeProjectContextStripMenuItem = new ToolStripMenuItem();
+        ToolStripMenuItem exportProjectContextStripMenuItem = new ToolStripMenuItem();
 
         TreeNode lastNode;
 
@@ -84,15 +86,17 @@ namespace SMM.Addons
             if (e.Button == MouseButtons.Right)
                 projectTreeView.SelectedNode = projectTreeView.GetNodeAt(e.Location);
 
-            if (IsHeadNode(projectTreeView.SelectedNode))
+            if (IsHeadNode(projectTreeView.SelectedNode)) //Project menu items
             {
                 deleteContextStripMenuItem.Visible = false;
                 closeProjectContextStripMenuItem.Visible = true;
+                exportProjectContextStripMenuItem.Visible = true;
             }
-            else
+            else //File and directory menu items
             {
                 deleteContextStripMenuItem.Visible = true;
                 closeProjectContextStripMenuItem.Visible = false;
+                exportProjectContextStripMenuItem.Visible = false;
             }
         }
 
@@ -109,6 +113,22 @@ namespace SMM.Addons
             closeProjectContextStripMenuItem.Click += CloseProjectContextStripMenuItem_Click; //((sender, e) => { MessageBox.Show("Replace this with something else"); });
             closeProjectContextStripMenuItem.Visible = false;
             projectTreeViewContextMenuStrip.Items.Add(closeProjectContextStripMenuItem);
+
+            exportProjectContextStripMenuItem.Image = TreeViewIcons.folder_export;
+            exportProjectContextStripMenuItem.Text = "Export project";
+            exportProjectContextStripMenuItem.Click += ExportProjectContextStripMenuItem_Click;
+            exportProjectContextStripMenuItem.Visible = false;
+            projectTreeViewContextMenuStrip.Items.Add(exportProjectContextStripMenuItem);
+        }
+
+        private void ExportProjectContextStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog sfd = new SaveFileDialog();
+            sfd.Filter = "Zip file|*.zip";
+            if (sfd.ShowDialog() == DialogResult.OK)
+            {
+                PakZip(sfd.FileName);
+            }
         }
 
         private void CloseProjectContextStripMenuItem_Click(object sender, EventArgs e)
@@ -236,6 +256,78 @@ namespace SMM.Addons
             Addon_BaseControls.panel.Controls.Clear();
         }
 
+        void PakZip(string filename)
+        {
+            ZipFile f = new ZipFile(filename);
+            TreeNode n = projectTreeView.SelectedNode;
+            List<FileEntry> e = new List<FileEntry>();
+
+            GenerateList(e, n, n.FullPath);
+            PakFiles(e, f);
+            f.Save();
+
+            e.Clear();
+            f.Dispose();
+            Utils.cleanupMemory();
+        }
+
+        void PakFiles(List<FileEntry> entries, ZipFile file)
+        {
+            foreach (FileEntry e in entries)
+            {
+                try
+                {
+                    switch (e.type)
+                    {
+                        case EntryType.Directory:
+                            file.AddDirectory(e.filename, e.path);
+                            break;
+                        case EntryType.File:
+                            file.AddFile(e.filename, e.path);
+                            break;
+                    }
+                }
+                catch { }
+            }
+        }
+
+        void GenerateList(List<FileEntry> e, TreeNode node, string root)
+        {
+            foreach (TreeNode n in node.Nodes)
+            {
+                string path = n.FullPath.Remove(0, root.Length + 1);
+
+                if (Directory.Exists(n.FullPath))
+                {
+                    try
+                    {
+                        e.Add(new FileEntry() { filename = n.FullPath, path = path, type = EntryType.Directory });
+                        GenerateList(e, n, root);
+                    }
+                    catch { }
+                }
+                else if (File.Exists(n.FullPath))
+                {
+                    FileInfo i = new FileInfo(n.FullPath);
+                    path = path.Remove(path.Length - i.Name.Length);
+                    e.Add(new FileEntry() { filename = n.FullPath, path = path, type = EntryType.File });
+                }
+            }
+        }
+
         #endregion
+    }
+
+    enum EntryType
+    {
+        File,
+        Directory
+    }
+
+    class FileEntry
+    {
+        public string filename;
+        public string path;
+        public EntryType type;
     }
 }

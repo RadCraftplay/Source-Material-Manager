@@ -34,6 +34,9 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Ionic.Zip">
+      <HintPath>..\..\..\..\Visual Studio 2010\Projects\notepad\notepad\bin\Debug\Ionic.Zip.dll</HintPath>
+    </Reference>
     <Reference Include="ScintillaNET">
       <HintPath>..\..\..\..\..\Downloads\ScintillaNET-master(1)\ScintillaNET-master\src\ScintillaNET\bin\Signed\ScintillaNET.dll</HintPath>
     </Reference>
@@ -206,6 +209,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\alpha_checkers1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\folder-export.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
