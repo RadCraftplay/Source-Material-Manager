@@ -7,7 +7,7 @@
 ### Let's make plugin!
 1. Create project using template _Dynamic link library (C#)_
 2. Browse to _Source Material Manager_ directory and add file _"SMM.exe"_ to references
-3. Remove default class and create new with name _Addon_
+3. Remove default class and create new one with name _Addon_
 4. Paste code bellow:
 ```c#
 using SMM;
