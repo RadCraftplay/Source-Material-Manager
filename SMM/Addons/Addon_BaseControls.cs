@@ -49,6 +49,7 @@ namespace SMM.Addons
         public void Initialize()
         {
             f = Form1.form;
+            f.Size = new System.Drawing.Size(800, 600);
             CreateControls();
         }
 
@@ -89,7 +90,8 @@ namespace SMM.Addons
             {
                 Location = new System.Drawing.Point(12, 27),
                 Size = new System.Drawing.Size(f.Width - 36, f.Height - 77),
-                FixedPanel = FixedPanel.Panel1
+                FixedPanel = FixedPanel.Panel1,
+                SplitterDistance = 200
             };
             f.Controls.Add(splitContainer);
             splitContainer.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
