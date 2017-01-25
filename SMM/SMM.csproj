@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -30,8 +31,12 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Ionic.Zip">
+      <HintPath>..\..\..\..\Visual Studio 2010\Projects\notepad\notepad\bin\Debug\Ionic.Zip.dll</HintPath>
+    </Reference>
     <Reference Include="ScintillaNET">
       <HintPath>..\..\..\..\..\Downloads\ScintillaNET-master(1)\ScintillaNET-master\src\ScintillaNET\bin\Signed\ScintillaNET.dll</HintPath>
     </Reference>
@@ -62,14 +67,33 @@
       <DependentUpon>PluginsBox.cs</DependentUpon>
     </Compile>
     <Compile Include="Addons\Addon_BaseContextMenu.cs" />
+    <Compile Include="Addons\Addon_BaseContextMenu_Controls\AddFileDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Addons\Addon_BaseContextMenu_Controls\AddFileDialog.Designer.cs">
+      <DependentUpon>AddFileDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Addons\Addon_BaseContextMenu_Controls\RenameFileDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Addons\Addon_BaseContextMenu_Controls\RenameFileDialog.Designer.cs">
+      <DependentUpon>RenameFileDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Addons\Addon_BaseMenuStripControls.cs" />
     <Compile Include="Addons\Addon_BasePluginLoader.cs" />
     <Compile Include="Addons\Addon_BaseProject.cs" />
+    <Compile Include="Addons\Addon_BaseProject_Controls\IDockableControl.cs" />
     <Compile Include="Addons\Addon_BaseProject_Controls\TextEditor.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Addons\Addon_BaseProject_Controls\TextEditor.Designer.cs">
       <DependentUpon>TextEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Addons\Addon_BaseProject_Controls\VTFViewer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Addons\Addon_BaseProject_Controls\VTFViewer.Designer.cs">
+      <DependentUpon>VTFViewer.cs</DependentUpon>
     </Compile>
     <Compile Include="Addons\Addon_BaseSession.cs" />
     <Compile Include="Addons\MenuStripIcons.Designer.cs">
@@ -93,14 +117,24 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils.cs" />
+    <Compile Include="VtfLib.cs" />
     <EmbeddedResource Include="Addons\Addon_BaseAbout_Controls\AboutBox.resx">
       <DependentUpon>AboutBox.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Addons\Addon_BaseAbout_Controls\PluginsBox.resx">
       <DependentUpon>PluginsBox.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Addons\Addon_BaseContextMenu_Controls\AddFileDialog.resx">
+      <DependentUpon>AddFileDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Addons\Addon_BaseContextMenu_Controls\RenameFileDialog.resx">
+      <DependentUpon>RenameFileDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Addons\Addon_BaseProject_Controls\TextEditor.resx">
       <DependentUpon>TextEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Addons\Addon_BaseProject_Controls\VTFViewer.resx">
+      <DependentUpon>VTFViewer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Addons\MenuStripIcons.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -132,6 +166,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="SMM.licenseheader" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -186,6 +221,24 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\puzzle--minus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\alpha_checkers.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\alpha_checkers1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\folder-export.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\document--plus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\document-import.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\pencil.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

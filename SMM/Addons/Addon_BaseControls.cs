@@ -1,4 +1,22 @@
-﻿using System;
+﻿/*
+Source Material Manager
+Copyright (C) 2016-2017 Distroir
+Email: radcraftplay2@gmail.com
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -70,7 +88,7 @@ namespace SMM.Addons
             splitContainer = new SplitContainer()
             {
                 Location = new System.Drawing.Point(12, 27),
-                Size = new System.Drawing.Size(f.Width - 24, f.Height - 77),
+                Size = new System.Drawing.Size(f.Width - 36, f.Height - 77),
                 FixedPanel = FixedPanel.Panel1
             };
             f.Controls.Add(splitContainer);
@@ -107,6 +125,7 @@ namespace SMM.Addons
         {
             splitContainer.Panel2.AutoScroll = true;
             splitContainer.Panel2.BackColor = System.Drawing.Color.White;
+            panel = splitContainer.Panel2;
         }
 
         #endregion

@@ -18,23 +18,40 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Drawing;
+using System.Data;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace SMM
+namespace SMM.Addons.Addon_BaseProject_Controls
 {
-    static class Program
+    public partial class VTFViewer : UserControl, IDockableControl
     {
-        /// <summary>
-        /// Główny punkt wejścia dla aplikacji.
-        /// </summary>
-        [STAThread]
-        static void Main()
+        public Image BASE_IMG;
+
+        public VTFViewer()
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            InitializeComponent();
+
+            pictureBox1.BackColor = Color.FromArgb(0, Color.White);
+            pictureBox1.Paint += PictureBox1_Paint;
+        }
+
+        public void Close()
+        {
+            
+        }
+
+        private void PictureBox1_Paint(object sender, PaintEventArgs e)
+        {
+            pictureBox1.Width = pictureBox1.Image.Width;
+            pictureBox1.Height = pictureBox1.Image.Height;
+
+            pictureBox1.Dock = DockStyle.None;
+            pictureBox1.SizeMode = PictureBoxSizeMode.Normal;
         }
     }
 }
