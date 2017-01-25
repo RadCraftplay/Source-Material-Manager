@@ -1,7 +1,7 @@
 # Making plugins
 ### Requirements
 * Microsoft Visual Studio (C#)
-* .Net Framework
+* .Net Framework 4.5.2
 * Source Material Manager
 
 ### Let's make plugin!
