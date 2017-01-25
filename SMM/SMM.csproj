@@ -73,6 +73,12 @@
     <Compile Include="Addons\Addon_BaseContextMenu_Controls\AddFileDialog.Designer.cs">
       <DependentUpon>AddFileDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Addons\Addon_BaseContextMenu_Controls\RenameFileDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Addons\Addon_BaseContextMenu_Controls\RenameFileDialog.Designer.cs">
+      <DependentUpon>RenameFileDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Addons\Addon_BaseMenuStripControls.cs" />
     <Compile Include="Addons\Addon_BasePluginLoader.cs" />
     <Compile Include="Addons\Addon_BaseProject.cs" />
@@ -120,6 +126,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Addons\Addon_BaseContextMenu_Controls\AddFileDialog.resx">
       <DependentUpon>AddFileDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Addons\Addon_BaseContextMenu_Controls\RenameFileDialog.resx">
+      <DependentUpon>RenameFileDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Addons\Addon_BaseProject_Controls\TextEditor.resx">
       <DependentUpon>TextEditor.cs</DependentUpon>
@@ -227,6 +236,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\document-import.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\pencil.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

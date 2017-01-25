@@ -38,6 +38,7 @@ namespace SMM.Addons
 
         ToolStripMenuItem addContextStripMenuItem = new ToolStripMenuItem();
         ToolStripMenuItem importContextStripMenuItem = new ToolStripMenuItem();
+        ToolStripMenuItem renameContextStripMenuItem = new ToolStripMenuItem();
         ToolStripMenuItem deleteContextStripMenuItem = new ToolStripMenuItem();
         ToolStripMenuItem closeProjectContextStripMenuItem = new ToolStripMenuItem();
         ToolStripMenuItem exportProjectContextStripMenuItem = new ToolStripMenuItem();
@@ -90,12 +91,14 @@ namespace SMM.Addons
 
             if (IsHeadNode(projectTreeView.SelectedNode)) //Project menu items
             {
+                renameContextStripMenuItem.Visible = false;
                 deleteContextStripMenuItem.Visible = false;
                 closeProjectContextStripMenuItem.Visible = true;
                 exportProjectContextStripMenuItem.Visible = true;
             }
             else //File and directory menu items
             {
+                renameContextStripMenuItem.Visible = true;
                 deleteContextStripMenuItem.Visible = true;
                 closeProjectContextStripMenuItem.Visible = false;
                 exportProjectContextStripMenuItem.Visible = false;
@@ -114,6 +117,12 @@ namespace SMM.Addons
             importContextStripMenuItem.Click += ImportItem_Click; //((sender, e) => { MessageBox.Show("Replace this with something else"); });
             projectTreeViewContextMenuStrip.Items.Add(importContextStripMenuItem);
 
+            renameContextStripMenuItem.Image = TreeViewIcons.pencil;
+            renameContextStripMenuItem.Text = "Rename";
+            renameContextStripMenuItem.Click += RenameItem_Click; //((sender, e) => { MessageBox.Show("Replace this with something else"); });
+            renameContextStripMenuItem.Visible = false;
+            projectTreeViewContextMenuStrip.Items.Add(renameContextStripMenuItem);
+
             deleteContextStripMenuItem.Image = TreeViewIcons.cross_script;
             deleteContextStripMenuItem.Text = "Delete";
             deleteContextStripMenuItem.Click += DeleteItem_Click; //((sender, e) => { MessageBox.Show("Replace this with something else"); });
@@ -131,6 +140,20 @@ namespace SMM.Addons
             exportProjectContextStripMenuItem.Click += ExportProjectContextStripMenuItem_Click;
             exportProjectContextStripMenuItem.Visible = false;
             projectTreeViewContextMenuStrip.Items.Add(exportProjectContextStripMenuItem);
+        }
+
+        private void RenameItem_Click(object sender, EventArgs e)
+        {
+            if (projectTreeView.SelectedNode.ImageIndex == 0)
+            {
+                var v = new Addon_BaseContextMenu_Controls.RenameFileDialog(new DirectoryInfo(projectTreeView.SelectedNode.FullPath), projectTreeView.SelectedNode);
+                v.ShowDialog();
+            }
+            else
+            {
+                var v = new Addon_BaseContextMenu_Controls.RenameFileDialog(new FileInfo(projectTreeView.SelectedNode.FullPath), projectTreeView.SelectedNode);
+                v.ShowDialog();
+            }
         }
 
         private void ImportItem_Click(object sender, EventArgs e)
