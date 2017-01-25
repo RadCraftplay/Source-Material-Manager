@@ -31,7 +31,7 @@ using Ionic.Zip;
 
 namespace SMM.Addons
 {
-    publicclass Addon_BaseContextMenu : IAddon
+    public class Addon_BaseContextMenu : IAddon
     {
         TreeView projectTreeView;
         ContextMenuStrip projectTreeViewContextMenuStrip;

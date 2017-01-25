@@ -26,7 +26,7 @@ using System.Reflection;
 
 namespace SMM.Addons
 {
-    class Addon_BasePluginLoader : IAddon
+    public class Addon_BasePluginLoader : IAddon
     {
         public static List<IAddon> Plugins = new List<IAddon>();
         string pluginsDir()
