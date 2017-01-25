@@ -18,7 +18,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -36,6 +38,8 @@ namespace SMM.Addons
         public static ImageList treeViewImageList;
         public static Panel panel;
 
+        public string SMMVersion;
+
         #region BaseAddon
 
         AddonInfo IAddon.Info
@@ -50,6 +54,7 @@ namespace SMM.Addons
         {
             f = Form1.form;
             f.Size = new System.Drawing.Size(800, 600);
+            GetVersion();
             CreateControls();
         }
 
@@ -128,6 +133,17 @@ namespace SMM.Addons
             splitContainer.Panel2.AutoScroll = true;
             splitContainer.Panel2.BackColor = System.Drawing.Color.White;
             panel = splitContainer.Panel2;
+        }
+
+        #endregion
+
+        #region Orther
+
+        void GetVersion()
+        {
+            Assembly assembly = Assembly.GetExecutingAssembly();
+            FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
+            SMMVersion = fvi.FileVersion;
         }
 
         #endregion
