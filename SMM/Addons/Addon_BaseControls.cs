@@ -38,7 +38,7 @@ namespace SMM.Addons
         public static ImageList treeViewImageList;
         public static Panel panel;
 
-        public string SMMVersion;
+        public static string SMMVersion;
 
         #region BaseAddon
 
