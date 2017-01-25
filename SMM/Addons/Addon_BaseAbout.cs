@@ -22,11 +22,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Reflection;
+using System.Diagnostics;
 
 namespace SMM.Addons
 {
-    class Addon_BaseAbout : IAddon
+    public class Addon_BaseAbout : IAddon
     {
+        public static string SMMVersion;
+
         #region Base Addon
 
         public AddonInfo Info
@@ -39,6 +43,7 @@ namespace SMM.Addons
 
         public void Initialize()
         {
+            GetVersion();
             CreateMenuItems();
         }
 
@@ -88,6 +93,17 @@ namespace SMM.Addons
         {
             var v = new Addon_BaseAbout_Controls.AboutBox();
             v.ShowDialog();
+        }
+
+        #endregion
+
+        #region Orther
+
+        void GetVersion()
+        {
+            Assembly assembly = Assembly.GetExecutingAssembly();
+            FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
+            SMMVersion = fvi.FileVersion;
         }
 
         #endregion
