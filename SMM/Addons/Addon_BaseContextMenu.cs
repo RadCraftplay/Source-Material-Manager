@@ -104,12 +104,10 @@ namespace SMM.Addons
 
         void CreateContextMenuStripItems()
         {
-            /*
             addContextStripMenuItem.Image = TreeViewIcons.document__plus;
             addContextStripMenuItem.Text = "New file";
             addContextStripMenuItem.Click += AddItem_Click; //((sender, e) => { MessageBox.Show("Replace this with something else"); });
             projectTreeViewContextMenuStrip.Items.Add(addContextStripMenuItem);
-            */
 
             importContextStripMenuItem.Image = TreeViewIcons.document_import;
             importContextStripMenuItem.Text = "Import file";
@@ -167,7 +165,8 @@ namespace SMM.Addons
 
         private void AddItem_Click(object sender, EventArgs e)
         {
-            
+            var v = new Addon_BaseContextMenu_Controls.AddFileDialog(projectTreeView.SelectedNode);
+            v.ShowDialog();
         }
 
         private void ExportProjectContextStripMenuItem_Click(object sender, EventArgs e)
