@@ -36,6 +36,8 @@ namespace SMM.Addons
         TreeView projectTreeView;
         ContextMenuStrip projectTreeViewContextMenuStrip;
 
+        ToolStripMenuItem addContextStripMenuItem = new ToolStripMenuItem();
+        ToolStripMenuItem importContextStripMenuItem = new ToolStripMenuItem();
         ToolStripMenuItem deleteContextStripMenuItem = new ToolStripMenuItem();
         ToolStripMenuItem closeProjectContextStripMenuItem = new ToolStripMenuItem();
         ToolStripMenuItem exportProjectContextStripMenuItem = new ToolStripMenuItem();
@@ -102,6 +104,18 @@ namespace SMM.Addons
 
         void CreateContextMenuStripItems()
         {
+            /*
+            addContextStripMenuItem.Image = TreeViewIcons.document__plus;
+            addContextStripMenuItem.Text = "New file";
+            addContextStripMenuItem.Click += AddItem_Click; //((sender, e) => { MessageBox.Show("Replace this with something else"); });
+            projectTreeViewContextMenuStrip.Items.Add(addContextStripMenuItem);
+            */
+
+            importContextStripMenuItem.Image = TreeViewIcons.document_import;
+            importContextStripMenuItem.Text = "Import file";
+            importContextStripMenuItem.Click += ImportItem_Click; //((sender, e) => { MessageBox.Show("Replace this with something else"); });
+            projectTreeViewContextMenuStrip.Items.Add(importContextStripMenuItem);
+
             deleteContextStripMenuItem.Image = TreeViewIcons.cross_script;
             deleteContextStripMenuItem.Text = "Delete";
             deleteContextStripMenuItem.Click += DeleteItem_Click; //((sender, e) => { MessageBox.Show("Replace this with something else"); });
@@ -119,6 +133,41 @@ namespace SMM.Addons
             exportProjectContextStripMenuItem.Click += ExportProjectContextStripMenuItem_Click;
             exportProjectContextStripMenuItem.Visible = false;
             projectTreeViewContextMenuStrip.Items.Add(exportProjectContextStripMenuItem);
+        }
+
+        private void ImportItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Filter = "All supported files|*.txt;*.vmt;*.vtf";
+            ofd.Multiselect = true;
+
+            if (ofd.ShowDialog() == DialogResult.OK)
+            {
+                TreeNode n = projectTreeView.SelectedNode;
+                string destination = null;
+
+                if (n.ImageIndex == 0)
+                {
+                    destination = n.FullPath;
+                }
+                else
+                {
+                    FileInfo f = new FileInfo(n.FullPath);
+                    destination = f.Directory.FullName;
+                }
+
+                foreach (string s in ofd.FileNames)
+                {
+                    FileInfo i = new FileInfo(s);
+                    File.Copy(i.FullName, Path.Combine(destination, i.Name), false);
+                    AddNewTreeNode(i);
+                }
+            }
+        }
+
+        private void AddItem_Click(object sender, EventArgs e)
+        {
+            
         }
 
         private void ExportProjectContextStripMenuItem_Click(object sender, EventArgs e)
@@ -313,6 +362,20 @@ namespace SMM.Addons
                     e.Add(new FileEntry() { filename = n.FullPath, path = path, type = EntryType.File });
                 }
             }
+        }
+
+        void AddNewTreeNode(FileInfo f)
+        {
+            TreeNode n = projectTreeView.SelectedNode;
+
+            if (f.Name.EndsWith(".txt"))
+                n.Nodes.Add(f.Name, f.Name, 3, 3);
+            else if (f.Name.EndsWith(".vtf"))
+                n.Nodes.Add(f.Name, f.Name, 5, 5);
+            else if (f.Name.EndsWith(".vmt"))
+                n.Nodes.Add(f.Name, f.Name, 4, 4);
+            else
+                n.Nodes.Add(f.Name, f.Name, 2, 2);
         }
 
         #endregion
