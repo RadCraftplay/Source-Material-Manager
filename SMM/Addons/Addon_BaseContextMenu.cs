@@ -228,13 +228,13 @@ namespace SMM.Addons
 
                 if (projectTreeView.SelectedNode.Text.EndsWith(".txt"))
                 {
-                    var tb = new Addon_BaseProject_Controls.TextEditor(Addon_BaseControls.treeView.SelectedNode.FullPath);
+                    var tb = new TextEditor(Addon_BaseControls.treeView.SelectedNode.FullPath);
                     Addon_BaseControls.panel.Controls.Add(tb);
                     tb.Dock = DockStyle.Fill;
                 }
                 else if (projectTreeView.SelectedNode.Text.EndsWith(".vmt"))
                 {
-                    var tb = new Addon_BaseProject_Controls.TextEditor(Addon_BaseControls.treeView.SelectedNode.FullPath);
+                    var tb = new TextEditor(Addon_BaseControls.treeView.SelectedNode.FullPath);
                     Addon_BaseControls.panel.Controls.Add(tb);
                     tb.Dock = DockStyle.Fill;
                 }
@@ -242,14 +242,8 @@ namespace SMM.Addons
                 {
                     LoadVtf l = new LoadVtf(LoadVTF);
                     l.Invoke(Addon_BaseControls.treeView.SelectedNode.FullPath);
-
-                    //MessageBox.Show("Texture file", "Replace me, please");
                 }
-                else
-                {
-                    //Does nothing
-                    //MessageBox.Show("Orther file", "Replace me, please");
-                }
+                else { } //Does nothing
             }
         }
 
@@ -295,11 +289,6 @@ namespace SMM.Addons
             Addon_BaseControls.panel.Controls.Add(v);
             v.Dock = DockStyle.Fill;
             v.pictureBox1.Image = (Image)b;
-
-            //PictureViewerControl con = new PictureViewerControl();
-            //con.Dock = DockStyle.Fill;
-            //con.pictureBox1.Image = (Image)b;
-            //con.BASE_IMG = (Image)b;
         }
 
         #endregion
