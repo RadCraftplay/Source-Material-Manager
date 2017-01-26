@@ -23,6 +23,10 @@ namespace SMM
 {
     public static class Utils
     {
+        /// <summary>
+        /// Removes directory
+        /// </summary>
+        /// <param name="directory">Directory to remove</param>
         public static void deleteDirectory(string directory)
         {
             DirectoryInfo d = new DirectoryInfo(directory);
@@ -33,20 +37,28 @@ namespace SMM
             d.Delete();
         }
 
-        public static void deleteDirectory(string directory, bool removeSobDirectories)
+        /// <summary>
+        /// Removes directory with subfiles
+        /// </summary>
+        /// <param name="directory">Directory to remove</param>
+        /// <param name="removeSubDirectories">If true, removes subdirectories</param>
+        public static void deleteDirectory(string directory, bool removeSubDirectories)
         {
             DirectoryInfo d = new DirectoryInfo(directory);
 
             foreach (FileInfo f in d.GetFiles())
                 f.Delete();
 
-            if (removeSobDirectories)
+            if (removeSubDirectories)
                 foreach (DirectoryInfo subDir in d.GetDirectories())
                     deleteDirectory(subDir.FullName, true);
 
             d.Delete();
         }
 
+        /// <summary>
+        /// Cleans memory
+        /// </summary>
         public static void cleanupMemory()
         {
             GC.Collect();
