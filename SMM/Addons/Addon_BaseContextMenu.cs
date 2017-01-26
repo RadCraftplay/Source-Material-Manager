@@ -16,18 +16,13 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+using Ionic.Zip;
+using SMM.Addons.Addon_BaseProject_Controls;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.IO;
-using System.Threading;
-using System.Threading.Tasks;
-using SMM.Addons.Addon_BaseProject_Controls;
 using System.Drawing;
-using Ionic.Zip;
+using System.IO;
+using System.Windows.Forms;
 
 namespace SMM.Addons
 {
