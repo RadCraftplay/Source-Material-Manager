@@ -36,6 +36,7 @@ namespace SMM.Addons.Addon_BaseAbout_Controls
             InitializeComponent();
             IntPtr Hicon = MenuStripIcons.information.GetHicon();
             Icon = Icon.FromHandle(Hicon);
+            versionLabel.Text = string.Format("Version {0}", Addon_BaseControls.SMMVersion);
         }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
