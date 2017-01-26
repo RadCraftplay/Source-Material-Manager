@@ -61,6 +61,9 @@ namespace SMM.Addons
 
         #region Session
 
+        /// <summary>
+        /// Saves list of projects
+        /// </summary>
         public void SaveProjects()
         {
             TextWriter w = new StreamWriter(projectListFile);
@@ -73,6 +76,10 @@ namespace SMM.Addons
             w.Dispose();
         }
 
+        /// <summary>
+        /// Gets list of projects
+        /// </summary>
+        /// <returns>List of projects</returns>
         public string[] GetProjects()
         {
             string[] projects = new string[projectTreeView.Nodes.Count];
@@ -83,6 +90,9 @@ namespace SMM.Addons
             return projects;
         }
 
+        /// <summary>
+        /// Loads list of projects from hard drive
+        /// </summary>
         public void LoadProjects()
         {
             try
@@ -103,13 +113,14 @@ namespace SMM.Addons
 
         #region Session_Directories
 
-
+        /// <summary>
+        /// Checks if directories to store data exist
+        /// </summary>
         void CheckDirectories()
         {
             if (!Directory.Exists(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Distroir", "Source Material Manager")))
                 Directory.CreateDirectory(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Distroir", "Source Material Manager"));
         }
-
 
         #endregion
 
@@ -140,6 +151,11 @@ namespace SMM.Addons
 
         #region Projects
 
+        /// <summary>
+        /// Builds tree of files in specified directory
+        /// </summary>
+        /// <param name="n">Parent node</param>
+        /// <param name="directory">Directory to look for subdirectories and files</param>
         void LoadDir(TreeNode n, string directory)
         {
             DirectoryInfo i = new DirectoryInfo(directory);
@@ -167,6 +183,10 @@ namespace SMM.Addons
 
         #region IO
 
+        /// <summary>
+        /// Starts building tree for specified directory
+        /// </summary>
+        /// <param name="directory">Directory to open</param>
         void OpenDirectory(string directory)
         {
             TreeNode n = projectTreeView.Nodes.Add(directory);
