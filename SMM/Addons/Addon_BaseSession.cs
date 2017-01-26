@@ -66,7 +66,7 @@ namespace SMM.Addons
                 w.Close();
                 w.Dispose();
             }
-            catch (Exception ex) { }
+            catch { }
         }
 
         void LoadSession()
@@ -82,7 +82,7 @@ namespace SMM.Addons
                 Form1.form.Size = se.WindowSize;
                 Addon_BaseControls.splitContainer.SplitterDistance = se.Panel1Width;
             }
-            catch (Exception ex) { }
+            catch { }
         }
 
         Session BuildSession()

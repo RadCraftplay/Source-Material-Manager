@@ -96,7 +96,7 @@ namespace SMM.Addons
                 r.Close();
                 r.Dispose();
             }
-            catch (Exception ex) { }
+            catch { }
         }
 
         #endregion
