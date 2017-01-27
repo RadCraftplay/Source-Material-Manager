@@ -86,13 +86,44 @@ namespace SMM.Addons
 
             if (IsHeadNode(projectTreeView.SelectedNode)) //Project menu items
             {
+                addContextStripMenuItem.Visible = true;
+                importContextStripMenuItem.Visible = true;
                 renameContextStripMenuItem.Visible = false;
                 deleteContextStripMenuItem.Visible = false;
                 closeProjectContextStripMenuItem.Visible = true;
                 exportProjectContextStripMenuItem.Visible = true;
             }
-            else //File and directory menu items
+            else if (projectTreeView.SelectedNode.ImageIndex == 0) //Directory
             {
+                addContextStripMenuItem.Visible = true;
+                importContextStripMenuItem.Visible = true;
+                renameContextStripMenuItem.Visible = true;
+                deleteContextStripMenuItem.Visible = true;
+                closeProjectContextStripMenuItem.Visible = false;
+                exportProjectContextStripMenuItem.Visible = false;
+            }
+            else if (projectTreeView.SelectedNode.ImageIndex == 4) //VMT
+            {
+                addContextStripMenuItem.Visible = false;
+                importContextStripMenuItem.Visible = false;
+                renameContextStripMenuItem.Visible = true;
+                deleteContextStripMenuItem.Visible = true;
+                closeProjectContextStripMenuItem.Visible = false;
+                exportProjectContextStripMenuItem.Visible = false;
+            }
+            else if (projectTreeView.SelectedNode.ImageIndex == 5) //VTF
+            {
+                addContextStripMenuItem.Visible = false;
+                importContextStripMenuItem.Visible = false;
+                renameContextStripMenuItem.Visible = true;
+                deleteContextStripMenuItem.Visible = true;
+                closeProjectContextStripMenuItem.Visible = false;
+                exportProjectContextStripMenuItem.Visible = false;
+            }
+            else //Other files and directories
+            {
+                addContextStripMenuItem.Visible = false;
+                importContextStripMenuItem.Visible = false;
                 renameContextStripMenuItem.Visible = true;
                 deleteContextStripMenuItem.Visible = true;
                 closeProjectContextStripMenuItem.Visible = false;
@@ -105,11 +136,13 @@ namespace SMM.Addons
             addContextStripMenuItem.Image = TreeViewIcons.document__plus;
             addContextStripMenuItem.Text = "New file";
             addContextStripMenuItem.Click += AddItem_Click; //((sender, e) => { MessageBox.Show("Replace this with something else"); });
+            addContextStripMenuItem.Visible = false;
             projectTreeViewContextMenuStrip.Items.Add(addContextStripMenuItem);
 
             importContextStripMenuItem.Image = TreeViewIcons.document_import;
             importContextStripMenuItem.Text = "Import file";
             importContextStripMenuItem.Click += ImportItem_Click; //((sender, e) => { MessageBox.Show("Replace this with something else"); });
+            importContextStripMenuItem.Visible = false;
             projectTreeViewContextMenuStrip.Items.Add(importContextStripMenuItem);
 
             renameContextStripMenuItem.Image = TreeViewIcons.pencil;
