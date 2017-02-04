@@ -106,6 +106,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>TreeViewIcons.resx</DependentUpon>
     </Compile>
+    <Compile Include="Config.cs" />
     <Compile Include="IAddon.cs" />
     <Compile Include="Addons\Addon_BaseControls.cs" />
     <Compile Include="Form1.cs">

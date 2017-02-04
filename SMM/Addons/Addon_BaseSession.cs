@@ -41,12 +41,14 @@ namespace SMM.Addons
         public void Initialize()
         {
             CheckDirectories();
+            Config.Load();
             LoadSession();
         }
 
         public void Shutdown()
         {
             SaveSession();
+            Config.Save();
         }
 
         #endregion
@@ -57,14 +59,10 @@ namespace SMM.Addons
         {
             try
             {
-                TextWriter w = new StreamWriter(sessionFile);
-                XmlSerializer s = new XmlSerializer(typeof(Session));
-                Session p = BuildSession();
-                s.Serialize(w, p);
-
-                w.Flush();
-                w.Close();
-                w.Dispose();
+                Config.AddVariable("Session_FormWindowState", (Int32)Form1.form.WindowState);
+                Config.AddVariable("Session_FormWindowWidth", Form1.form.Size.Width);
+                Config.AddVariable("Session_FormWindowHeight", Form1.form.Size.Height);
+                Config.AddVariable("Session_SplitterDistance", Addon_BaseControls.splitContainer.SplitterDistance);
             }
             catch { }
         }
@@ -73,28 +71,11 @@ namespace SMM.Addons
         {
             try
             {
-                TextReader r = new StreamReader(sessionFile);
-                XmlSerializer s = new XmlSerializer(typeof(Session));
-                Session se = (Session)s.Deserialize(r);
-                r.Close();
-                r.Dispose();
-                Form1.form.WindowState = se.WindowState;
-                Form1.form.Size = se.WindowSize;
-                Addon_BaseControls.splitContainer.SplitterDistance = se.Panel1Width;
+                Form1.form.WindowState = (FormWindowState)Config.ReadInt("Session_FormWindowState");
+                Form1.form.Size = new Size(Config.ReadInt("Session_FormWindowWidth"), Config.ReadInt("Session_FormWindowHeight"));
+                Addon_BaseControls.splitContainer.SplitterDistance = Config.ReadInt("Session_SplitterDistance");
             }
             catch { }
-        }
-
-        Session BuildSession()
-        {
-            Session s = new Session()
-            {
-                WindowState = Form1.form.WindowState,
-                WindowSize = Form1.form.Size,
-                Panel1Width = Addon_BaseControls.splitContainer.Panel1.Width
-            };
-
-            return s;
         }
 
         #endregion
@@ -110,12 +91,5 @@ namespace SMM.Addons
 
 
         #endregion
-    }
-
-    public class Session
-    {
-        public FormWindowState WindowState;
-        public Size WindowSize;
-        public int Panel1Width;
     }
 }
