@@ -96,6 +96,7 @@
       <DependentUpon>VTFViewer.cs</DependentUpon>
     </Compile>
     <Compile Include="Addons\Addon_BaseSession.cs" />
+    <Compile Include="Addons\Addon_SMMUpdater.cs" />
     <Compile Include="Addons\MenuStripIcons.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

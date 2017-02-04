@@ -57,6 +57,7 @@ namespace SMM
             a.Add(new Addons.Addon_BaseContextMenu());
             a.Add(new Addons.Addon_BasePluginLoader());
             a.Add(new Addons.Addon_BaseAbout());
+            a.Add(new SMM_Updater.Addon_SMMUpdater());
 
             foreach (IAddon addon in a)
                 addon.Initialize();
