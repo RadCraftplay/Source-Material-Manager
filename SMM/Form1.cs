@@ -16,6 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
@@ -32,6 +33,12 @@ namespace SMM
             return Directory.GetCurrentDirectory();
         }
 
+        void CheckDirectories()
+        {
+            if (!Directory.Exists(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Distroir", "Source Material Manager")))
+                Directory.CreateDirectory(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Distroir", "Source Material Manager"));
+        }
+
         #region Base form
 
         public Form1()
@@ -39,6 +46,9 @@ namespace SMM
             InitializeComponent();
             FormClosed += Form1_FormClosed;
             form = this;
+
+            CheckDirectories();
+            Config.Load();
 
             a.Add(new Addons.Addon_BaseControls());
             a.Add(new Addons.Addon_BaseMenuStripControls());
@@ -56,6 +66,8 @@ namespace SMM
         {
             foreach (IAddon addon in a)
                 addon.Shutdown();
+
+            Config.Save();
         }
 
         #endregion

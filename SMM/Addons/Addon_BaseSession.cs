@@ -20,7 +20,6 @@ using System;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
-using System.Xml.Serialization;
 
 namespace SMM.Addons
 {
@@ -40,15 +39,12 @@ namespace SMM.Addons
 
         public void Initialize()
         {
-            CheckDirectories();
-            Config.Load();
             LoadSession();
         }
 
         public void Shutdown()
         {
             SaveSession();
-            Config.Save();
         }
 
         #endregion
@@ -77,18 +73,6 @@ namespace SMM.Addons
             }
             catch { }
         }
-
-        #endregion
-
-        #region Session_Directories
-
-
-        void CheckDirectories()
-        {
-            if (!Directory.Exists(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Distroir", "Source Material Manager")))
-                Directory.CreateDirectory(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Distroir", "Source Material Manager"));
-        }
-
 
         #endregion
     }
