@@ -1,4 +1,4 @@
-# Source Material Manager (alpha)
+# Source Material Manager (beta)
 
 ### What is Source Material Manager?
 _Source Material Manager_ is an application to manage VTF and VMT files.
