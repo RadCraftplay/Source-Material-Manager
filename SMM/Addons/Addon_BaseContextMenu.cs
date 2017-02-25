@@ -22,6 +22,8 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace SMM.Addons
@@ -226,6 +228,15 @@ namespace SMM.Addons
             sfd.Filter = "Zip file|*.zip";
             if (sfd.ShowDialog() == DialogResult.OK)
             {
+                /*
+                 * Thread t = new Thread(() => PakZip(sfd.FileName))
+                {
+                    Name = "ZIP_PACKING",
+                    IsBackground = false
+                };
+                t.SetApartmentState(ApartmentState.MTA);
+                t.Start();
+                */
                 PakZip(sfd.FileName);
             }
         }
