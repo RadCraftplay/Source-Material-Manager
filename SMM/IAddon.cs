@@ -20,10 +20,19 @@ namespace SMM
 {
     public interface IAddon
     {
+        /// <summary>
+        /// Info about addon
+        /// </summary>
         AddonInfo Info { get; }
 
+        /// <summary>
+        /// Initializes plugin
+        /// </summary>
         void Initialize();
 
+        /// <summary>
+        /// This method is being executed when SMM is shutting down
+        /// </summary>
         void Shutdown();
     }
 

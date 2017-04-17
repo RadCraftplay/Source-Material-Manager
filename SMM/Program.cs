@@ -24,7 +24,7 @@ namespace SMM
     static class Program
     {
         /// <summary>
-        /// Główny punkt wejścia dla aplikacji.
+        /// Entry point of the application
         /// </summary>
         [STAThread]
         static void Main()

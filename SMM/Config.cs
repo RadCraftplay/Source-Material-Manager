@@ -10,13 +10,24 @@ namespace SMM
     {
         #region Variables
 
+        /// <summary>
+        /// Contains settings of the application
+        /// </summary>
         public static List<Key> settings = new List<Key>();
+        /// <summary>
+        /// Config file name
+        /// </summary>
         public static string destination = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Distroir", "Source Material Manager", "config.xml");
 
         #endregion
 
         #region Config Variables
 
+        /// <summary>
+        /// Add varriable to config
+        /// </summary>
+        /// <param name="name">Name of the varriable</param>
+        /// <param name="value">Value of the varriable</param>
         public static void AddVariable(string name, string value)
         {
             Key k = new Key();
@@ -34,21 +45,41 @@ namespace SMM
             settings.Add(k);
         }
 
+        /// <summary>
+        /// Add varriable to config
+        /// </summary>
+        /// <param name="name">Name of the varriable</param>
+        /// <param name="value">Value of the varriable</param>
         public static void AddVariable(string name, object value)
         {
             AddVariable(name, value.ToString());
         }
 
+        /// <summary>
+        /// Add varriable to config
+        /// </summary>
+        /// <param name="name">Name of the varriable</param>
+        /// <param name="value">Value of the varriable</param>
         public static void AddVariable(string name, int value)
         {
             AddVariable(name, value.ToString());
         }
 
+        /// <summary>
+        /// Add varriable to config
+        /// </summary>
+        /// <param name="name">Name of the varriable</param>
+        /// <param name="value">Value of the varriable</param>
         public static void AddVariable(string name, float value)
         {
             AddVariable(name, value.ToString("R").Replace(',', '.'));
         }
 
+        /// <summary>
+        /// Gets value of varrible from the config
+        /// </summary>
+        /// <param name="name">Name of the varriable</param>
+        /// <returns>Value of specified varrialbe</returns>
         public static object ReadVariable(string name)
         {
             foreach (Key k in settings)
@@ -58,6 +89,11 @@ namespace SMM
             throw new KeyNotFoundException();
         }
 
+        /// <summary>
+        /// Tries to get value of varrible from the config
+        /// </summary>
+        /// <param name="name">Name of the varriable</param>
+        /// <returns>Value of specified varrialbe</returns>
         public static object TryReadVariable(string name)
         {
             try
@@ -69,31 +105,61 @@ namespace SMM
             return null;
         }
 
+        /// <summary>
+        /// Gets value of varrible from the config
+        /// </summary>
+        /// <param name="name">Name of the varriable</param>
+        /// <returns>Value of specified varrialbe (as string)</returns>
         public static object ReadString(string name)
         {
             return (string)ReadVariable(name);
         }
 
+        /// <summary>
+        /// Tries to get value of varrible from the config
+        /// </summary>
+        /// <param name="name">Name of the varriable</param>
+        /// <returns>Value of specified varrialbe (as string)</returns>
         public static object TryReadString(string name)
         {
             return (string)TryReadVariable(name);
         }
 
+        /// <summary>
+        /// Gets value of varrible from the config
+        /// </summary>
+        /// <param name="name">Name of the varriable</param>
+        /// <returns>Value of specified varrialbe (as float)</returns>
         public static float ReadFloat(string name)
         {
             return float.Parse((string)ReadVariable(name), CultureInfo.InvariantCulture.NumberFormat);
         }
 
+        /// <summary>
+        /// Tries to get value of varrible from the config
+        /// </summary>
+        /// <param name="name">Name of the varriable</param>
+        /// <returns>Value of specified varrialbe (as float)</returns>
         public static float TryReadFloat(string name)
         {
             return float.Parse((string)TryReadVariable(name), CultureInfo.InvariantCulture.NumberFormat);
         }
 
+        /// <summary>
+        /// Gets value of varrible from the config
+        /// </summary>
+        /// <param name="name">Name of the varriable</param>
+        /// <returns>Value of specified varrialbe</returns>
         public static int ReadInt(string name)
         {
             return Convert.ToInt32((string)ReadVariable(name));
         }
 
+        /// <summary>
+        /// Tries to get value of varrible from the config
+        /// </summary>
+        /// <param name="name">Name of the varriable</param>
+        /// <returns>Value of specified varrialbe (as int)</returns>
         public static int TryReadInt(string name)
         {
             return Convert.ToInt32((string)TryReadVariable(name));
@@ -103,6 +169,9 @@ namespace SMM
 
         #region IO
 
+        /// <summary>
+        /// Saves config
+        /// </summary>
         public static void Save()
         {
             TextWriter w = new StreamWriter(destination);
@@ -113,6 +182,9 @@ namespace SMM
             w.Dispose();
         }
 
+        /// <summary>
+        /// Loads config
+        /// </summary>
         public static void Load()
         {
             try

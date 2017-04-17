@@ -25,14 +25,28 @@ namespace SMM
 {
     public partial class Form1 : Form
     {
+        /// <summary>
+        /// List of addons used in application
+        /// </summary>
         public static List<IAddon> a = new List<IAddon>();
+        /// <summary>
+        /// Static instance of form
+        /// </summary>
         public static Form1 form;
         
+        /// <summary>
+        /// Gets installation of appliaction
+        /// </summary>
+        /// <returns>Installation directory</returns>
         public static string getInstallDir()
         {
             return Directory.GetCurrentDirectory();
         }
 
+
+        /// <summary>
+        /// Looks for directories needed for application to work. If they not exist, creates them
+        /// </summary>
         void CheckDirectories()
         {
             if (!Directory.Exists(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Distroir", "Source Material Manager")))
@@ -41,6 +55,9 @@ namespace SMM
 
         #region Base form
 
+        /// <summary>
+        /// Initialize form
+        /// </summary>
         public Form1()
         {
             InitializeComponent();
@@ -63,6 +80,11 @@ namespace SMM
                 addon.Initialize();
         }
 
+        /// <summary>
+        /// Executes when form is closed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
             foreach (IAddon addon in a)
