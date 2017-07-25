@@ -94,7 +94,6 @@ namespace SMM.Addons
         /// </summary>
         private void ProjectTreeView_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            //Open file associated with selected node
             OpenFile();
         }
 
@@ -257,11 +256,7 @@ namespace SMM.Addons
             sfd.Filter = "Zip file|*.zip";
             if (sfd.ShowDialog() == DialogResult.OK)
             {
-                //Export ZIP archive
-                TreeNode n = projectTreeView.SelectedNode;
-                await Task.Run(() => PakZip(sfd.FileName, n));
-                //Inform user that exporting finished
-                MessageBox.Show("Exporting finished!");
+                await Task.Run(() => PakZip(sfd.FileName));
             }
         }
 
@@ -287,36 +282,27 @@ namespace SMM.Addons
         
         #region Opening Files
 
-        /// <summary>
-        /// Opens file associated with selected node
-        /// </summary>
         async void OpenFile()
         {
             if (!(projectTreeView.SelectedNode.ImageIndex == 0))
             {
-                //Close all controls in panel on right side of screen
                 ClosePanelControls();
-                //Set last node
                 lastNode = projectTreeView.SelectedNode;
 
-                //Check for known extensions
                 if (projectTreeView.SelectedNode.Text.EndsWith(".txt"))
                 {
-                    //Open file and create control
                     var tb = new TextEditor(Addon_BaseControls.treeView.SelectedNode.FullPath);
                     Addon_BaseControls.panel.Controls.Add(tb);
                     tb.Dock = DockStyle.Fill;
                 }
                 else if (projectTreeView.SelectedNode.Text.EndsWith(".vmt"))
                 {
-                    //Open file and create control
                     var tb = new TextEditor(Addon_BaseControls.treeView.SelectedNode.FullPath);
                     Addon_BaseControls.panel.Controls.Add(tb);
                     tb.Dock = DockStyle.Fill;
                 }
                 else if (projectTreeView.SelectedNode.Text.EndsWith(".vtf"))
                 {
-                    //Load file
                     string path = Addon_BaseControls.treeView.SelectedNode.FullPath;
                     await Task.Run(() => LoadVTF(path));
 
@@ -391,10 +377,10 @@ namespace SMM.Addons
             Addon_BaseControls.panel.Controls.Clear();
         }
 
-        void PakZip(string filename, TreeNode n)
+        void PakZip(string filename)
         {
             ZipFile f = new ZipFile(filename);
-            //TreeNode n = projectTreeView.SelectedNode;
+            TreeNode n = projectTreeView.SelectedNode;
             List<FileEntry> e = new List<FileEntry>();
 
             GenerateList(e, n, n.FullPath);
