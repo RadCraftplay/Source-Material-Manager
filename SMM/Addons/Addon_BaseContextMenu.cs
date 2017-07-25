@@ -94,7 +94,7 @@ namespace SMM.Addons
         /// </summary>
         private void ProjectTreeView_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            //Opens file associated with node
+            //Open file associated with node
             OpenFile();
         }
 
@@ -156,7 +156,7 @@ namespace SMM.Addons
         }
 
         /// <summary>
-        /// This function creates context menu strip items
+        /// Creates context menu strip items
         /// </summary>
         void CreateContextMenuStripItems()
         {
@@ -284,30 +284,39 @@ namespace SMM.Addons
         }
 
         #endregion
-        
+
         #region Opening Files
 
+        /// <summary>
+        /// Opens file associated with node
+        /// </summary>
         async void OpenFile()
         {
             if (!(projectTreeView.SelectedNode.ImageIndex == 0))
             {
+                //Close controls in right panel
                 ClosePanelControls();
+                //Get last node
                 lastNode = projectTreeView.SelectedNode;
 
+                //Look for known extensions
                 if (projectTreeView.SelectedNode.Text.EndsWith(".txt"))
                 {
+                    //Create TextEditor
                     var tb = new TextEditor(Addon_BaseControls.treeView.SelectedNode.FullPath);
                     Addon_BaseControls.panel.Controls.Add(tb);
                     tb.Dock = DockStyle.Fill;
                 }
                 else if (projectTreeView.SelectedNode.Text.EndsWith(".vmt"))
                 {
+                    //Create TextEditor
                     var tb = new TextEditor(Addon_BaseControls.treeView.SelectedNode.FullPath);
                     Addon_BaseControls.panel.Controls.Add(tb);
                     tb.Dock = DockStyle.Fill;
                 }
                 else if (projectTreeView.SelectedNode.Text.EndsWith(".vtf"))
                 {
+                    //Load VTF
                     string path = Addon_BaseControls.treeView.SelectedNode.FullPath;
                     await Task.Run(() => LoadVTF(path));
 
