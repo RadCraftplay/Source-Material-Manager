@@ -26,7 +26,7 @@ namespace SMM
         AddonInfo Info { get; }
 
         /// <summary>
-        /// Initializes plugin
+        /// Initializes addon
         /// </summary>
         void Initialize();
 

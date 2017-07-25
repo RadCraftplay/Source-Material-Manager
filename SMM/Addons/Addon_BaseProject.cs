@@ -25,10 +25,23 @@ namespace SMM.Addons
 {
     public class Addon_BaseProject : IAddon
     {
+        #region Variables
+
+        /// <summary>
+        /// Instance of project tree view
+        /// </summary>
         TreeView projectTreeView;
+        /// <summary>
+        /// Name of file containing list of projects
+        /// </summary>
         string projectListFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Distroir", "Source Material Manager", "projects.xml");
 
+        /// <summary>
+        /// Folder browser dialog
+        /// </summary>
         FolderBrowserDialog projectBrowserDialog;
+
+        #endregion Variables
 
         #region BaseAddon
 
@@ -126,21 +139,32 @@ namespace SMM.Addons
 
         #region Menu Strip items
 
+        /// <summary>
+        /// Creates menu strip items
+        /// </summary>
         void CreateMenuStripItems()
         {
             CreateOpenMenuStripItem();
         }
 
+        /// <summary>
+        /// Creates and adds "Open" menu strip item
+        /// </summary>
         void CreateOpenMenuStripItem()
         {
+            //Create item
             ToolStripItem i = new ToolStripMenuItem();
             i.Text = "Open directory";
             i.Image = MenuStripIcons.folder_open;
             i.Click += FolderOpenToolStripItem_Click;
 
+            //Add item
             Addon_BaseMenuStripControls.fileMenuStripItem.DropDownItems.Add(i);
         }
 
+        /// <summary>
+        /// This method is being executed when user clicks on FolderOpenToolStripItem
+        /// </summary>
         private void FolderOpenToolStripItem_Click(object sender, EventArgs e)
         {
             if (projectBrowserDialog.ShowDialog() == DialogResult.OK)

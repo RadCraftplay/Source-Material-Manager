@@ -30,7 +30,15 @@ namespace SMM.Addons
 {
     public class Addon_BaseContextMenu : IAddon
     {
+        #region Variables
+
+        /// <summary>
+        /// Instance of project tree view
+        /// </summary>
         TreeView projectTreeView;
+        /// <summary>
+        /// Context menu strip for project tree view
+        /// </summary>
         ContextMenuStrip projectTreeViewContextMenuStrip;
 
         ToolStripMenuItem addContextStripMenuItem = new ToolStripMenuItem();
@@ -41,6 +49,8 @@ namespace SMM.Addons
         ToolStripMenuItem exportProjectContextStripMenuItem = new ToolStripMenuItem();
 
         TreeNode lastNode;
+
+        #endregion
 
         #region Base Addon
 
@@ -67,6 +77,9 @@ namespace SMM.Addons
 
         #region TreeViewContextMenu
 
+        /// <summary>
+        /// Creates context menu strip
+        /// </summary>
         void CreateContextMenuStrip()
         {
             projectTreeViewContextMenuStrip = new ContextMenuStrip();
@@ -76,16 +89,24 @@ namespace SMM.Addons
             CreateContextMenuStripItems();
         }
 
+        /// <summary>
+        /// This method executes every time when user double-clicks on project tree view
+        /// </summary>
         private void ProjectTreeView_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             OpenFile();
         }
 
+        /// <summary>
+        /// This method executes every time when user clicks on project tree view
+        /// </summary>
         private void ProjectTreeView_MouseClick(object sender, MouseEventArgs e)
         {
+            //Select node on rmb click
             if (e.Button == MouseButtons.Right)
                 projectTreeView.SelectedNode = projectTreeView.GetNodeAt(e.Location);
 
+            //Manage context menu items depending on file extension
             if (IsHeadNode(projectTreeView.SelectedNode)) //Project menu items
             {
                 addContextStripMenuItem.Visible = true;
@@ -133,35 +154,38 @@ namespace SMM.Addons
             }
         }
 
+        /// <summary>
+        /// This function creates context menu strip items
+        /// </summary>
         void CreateContextMenuStripItems()
         {
             addContextStripMenuItem.Image = TreeViewIcons.document__plus;
             addContextStripMenuItem.Text = "New file";
-            addContextStripMenuItem.Click += AddItem_Click; //((sender, e) => { MessageBox.Show("Replace this with something else"); });
+            addContextStripMenuItem.Click += AddItem_Click;
             addContextStripMenuItem.Visible = false;
             projectTreeViewContextMenuStrip.Items.Add(addContextStripMenuItem);
 
             importContextStripMenuItem.Image = TreeViewIcons.document_import;
             importContextStripMenuItem.Text = "Import file";
-            importContextStripMenuItem.Click += ImportItem_Click; //((sender, e) => { MessageBox.Show("Replace this with something else"); });
+            importContextStripMenuItem.Click += ImportItem_Click;
             importContextStripMenuItem.Visible = false;
             projectTreeViewContextMenuStrip.Items.Add(importContextStripMenuItem);
 
             renameContextStripMenuItem.Image = TreeViewIcons.pencil;
             renameContextStripMenuItem.Text = "Rename";
-            renameContextStripMenuItem.Click += RenameItem_Click; //((sender, e) => { MessageBox.Show("Replace this with something else"); });
+            renameContextStripMenuItem.Click += RenameItem_Click;
             renameContextStripMenuItem.Visible = false;
             projectTreeViewContextMenuStrip.Items.Add(renameContextStripMenuItem);
 
             deleteContextStripMenuItem.Image = TreeViewIcons.cross_script;
             deleteContextStripMenuItem.Text = "Delete";
-            deleteContextStripMenuItem.Click += DeleteItem_Click; //((sender, e) => { MessageBox.Show("Replace this with something else"); });
+            deleteContextStripMenuItem.Click += DeleteItem_Click;
             deleteContextStripMenuItem.Visible = false;
             projectTreeViewContextMenuStrip.Items.Add(deleteContextStripMenuItem);
 
             closeProjectContextStripMenuItem.Image = TreeViewIcons.cross_script;
             closeProjectContextStripMenuItem.Text = "Close project";
-            closeProjectContextStripMenuItem.Click += CloseProjectContextStripMenuItem_Click; //((sender, e) => { MessageBox.Show("Replace this with something else"); });
+            closeProjectContextStripMenuItem.Click += CloseProjectContextStripMenuItem_Click;
             closeProjectContextStripMenuItem.Visible = false;
             projectTreeViewContextMenuStrip.Items.Add(closeProjectContextStripMenuItem);
 
@@ -176,11 +200,13 @@ namespace SMM.Addons
         {
             if (projectTreeView.SelectedNode.ImageIndex == 0)
             {
+                //If selected node is directory rename directory
                 var v = new Addon_BaseContextMenu_Controls.RenameFileDialog(new DirectoryInfo(projectTreeView.SelectedNode.FullPath), projectTreeView.SelectedNode);
                 v.ShowDialog();
             }
             else
             {
+                //Ortherwise rename file
                 var v = new Addon_BaseContextMenu_Controls.RenameFileDialog(new FileInfo(projectTreeView.SelectedNode.FullPath), projectTreeView.SelectedNode);
                 v.ShowDialog();
             }
@@ -188,26 +214,28 @@ namespace SMM.Addons
 
         private void ImportItem_Click(object sender, EventArgs e)
         {
+            //Create open file dialog
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.Filter = "All supported files|*.txt;*.vmt;*.vtf";
             ofd.Multiselect = true;
 
+            //Show dialog
             if (ofd.ShowDialog() == DialogResult.OK)
             {
                 TreeNode n = projectTreeView.SelectedNode;
                 string destination = null;
 
-                if (n.ImageIndex == 0)
+                if (n.ImageIndex == 0) //If node is directory
                 {
                     destination = n.FullPath;
                 }
-                else
+                else //If node is file
                 {
                     FileInfo f = new FileInfo(n.FullPath);
                     destination = f.Directory.FullName;
                 }
 
-                foreach (string s in ofd.FileNames)
+                foreach (string s in ofd.FileNames) //Import all selected files
                 {
                     FileInfo i = new FileInfo(s);
                     File.Copy(i.FullName, Path.Combine(destination, i.Name), false);
@@ -228,15 +256,14 @@ namespace SMM.Addons
             sfd.Filter = "Zip file|*.zip";
             if (sfd.ShowDialog() == DialogResult.OK)
             {
-                /*
-                 * Thread t = new Thread(() => PakZip(sfd.FileName))
-                {
-                    Name = "ZIP_PACKING",
-                    IsBackground = false
-                };
-                t.SetApartmentState(ApartmentState.MTA);
-                t.Start();
-                */
+
+                //Thread t = new Thread(() => PakZip(sfd.FileName))
+                //{
+                //    Name = "ZIP_PACKING",
+                //    IsBackground = false
+                //};
+                //t.SetApartmentState(ApartmentState.MTA);
+                //t.Start();
                 PakZip(sfd.FileName);
             }
         }

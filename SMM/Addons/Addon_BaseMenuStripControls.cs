@@ -22,10 +22,22 @@ namespace SMM.Addons
 {
     public class Addon_BaseMenuStripControls : IAddon
     {
+        /// <summary>
+        /// Instance of main menu strip
+        /// </summary>
         public MenuStrip menuStrip;
 
+        /// <summary>
+        /// "File" menu strip item
+        /// </summary>
         public static ToolStripMenuItem fileMenuStripItem;
+        /// <summary>
+        /// "Edit" menu strip item
+        /// </summary>
         public static ToolStripMenuItem editMenuStripItem;
+        /// <summary>
+        /// "Options" menu strip item
+        /// </summary>
         public static ToolStripMenuItem optionsMenuStripItem;
 
         #region Base addon
@@ -53,6 +65,9 @@ namespace SMM.Addons
 
         #region BaseControls
 
+        /// <summary>
+        /// Creates and adds items to menu strip
+        /// </summary>
         public void AddToolStripItems()
         {
             fileMenuStripItem = new ToolStripMenuItem()
@@ -74,7 +89,7 @@ namespace SMM.Addons
                 Text = "Options"
             };
 
-            menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { fileMenuStripItem, editMenuStripItem, optionsMenuStripItem });
+            menuStrip.Items.AddRange(new ToolStripItem[] { fileMenuStripItem, editMenuStripItem, optionsMenuStripItem });
         }
 
         #endregion

@@ -25,7 +25,14 @@ namespace SMM.Addons
 {
     public class Addon_BaseSession : IAddon
     {
+        #region Variables
+
+        /// <summary>
+        /// Name of file containing session information
+        /// </summary>
         string sessionFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Distroir", "Source Material Manager", "session.xml");
+
+        #endregion
 
         #region Base Addon
 
@@ -51,6 +58,9 @@ namespace SMM.Addons
 
         #region Session
 
+        /// <summary>
+        /// Saves informations about session to config
+        /// </summary>
         void SaveSession()
         {
             try
@@ -63,6 +73,9 @@ namespace SMM.Addons
             catch { }
         }
 
+        /// <summary>
+        /// Reads information about session from config
+        /// </summary>
         void LoadSession()
         {
             try

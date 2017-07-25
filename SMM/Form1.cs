@@ -25,6 +25,8 @@ namespace SMM
 {
     public partial class Form1 : Form
     {
+        #region Variables
+
         /// <summary>
         /// List of addons used in application
         /// </summary>
@@ -33,7 +35,11 @@ namespace SMM
         /// Static instance of form
         /// </summary>
         public static Form1 form;
-        
+
+        #endregion
+
+        #region Utilies
+
         /// <summary>
         /// Gets installation of appliaction
         /// </summary>
@@ -42,7 +48,6 @@ namespace SMM
         {
             return Directory.GetCurrentDirectory();
         }
-
 
         /// <summary>
         /// Looks for directories needed for application to work. If they not exist, creates them
@@ -53,6 +58,8 @@ namespace SMM
                 Directory.CreateDirectory(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Distroir", "Source Material Manager"));
         }
 
+        #endregion
+
         #region Base form
 
         /// <summary>
@@ -60,13 +67,16 @@ namespace SMM
         /// </summary>
         public Form1()
         {
+            //Initialize form
             InitializeComponent();
             FormClosed += Form1_FormClosed;
             form = this;
 
+            //Load config
             CheckDirectories();
             Config.Load();
 
+            //Load all modules
             a.Add(new Addons.Addon_BaseControls());
             a.Add(new Addons.Addon_BaseMenuStripControls());
             a.Add(new Addons.Addon_BaseProject());
@@ -76,6 +86,7 @@ namespace SMM
             a.Add(new Addons.Addon_BaseAbout());
             a.Add(new SMM_Updater.Addon_SMMUpdater());
 
+            //Initialize all modules
             foreach (IAddon addon in a)
                 addon.Initialize();
         }
@@ -83,13 +94,13 @@ namespace SMM
         /// <summary>
         /// Executes when form is closed
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
+            //Shut down all modules
             foreach (IAddon addon in a)
                 addon.Shutdown();
 
+            //Save config
             Config.Save();
         }
 

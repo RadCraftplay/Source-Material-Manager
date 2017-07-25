@@ -24,16 +24,41 @@ namespace SMM.Addons
 {
     public class Addon_BaseControls : IAddon
     {
+        #region Variables
+
+        /// <summary>
+        /// Instance of main window
+        /// </summary>
         public Form f;
 
+        /// <summary>
+        /// Split container containing treeView and panel
+        /// </summary>
         public static SplitContainer splitContainer;
+        /// <summary>
+        /// Main menu strip of application
+        /// </summary>
         public static MenuStrip menuStrip;
 
+        /// <summary>
+        /// Tree view for project files
+        /// </summary>
         public static TreeView treeView;
+        /// <summary>
+        /// Image list for treeView
+        /// </summary>
         public static ImageList treeViewImageList;
+        /// <summary>
+        /// Panel at right part of the window
+        /// </summary>
         public static Panel panel;
 
+        /// <summary>
+        /// Version of Source Material Manager
+        /// </summary>
         public static string SMMVersion;
+
+        #endregion
 
         #region BaseAddon
 
@@ -62,6 +87,9 @@ namespace SMM.Addons
 
         #region BaseControls
 
+        /// <summary>
+        /// Creates base controls
+        /// </summary>
         public void CreateControls()
         {
             CreateMenuStrip();
@@ -71,6 +99,9 @@ namespace SMM.Addons
             CreatePanel();
         }
 
+        /// <summary>
+        /// Creates main menu strip
+        /// </summary>
         public void CreateMenuStrip()
         {
             menuStrip = new MenuStrip()
@@ -84,6 +115,9 @@ namespace SMM.Addons
             menuStrip.Dock = DockStyle.Top;
         }
 
+        /// <summary>
+        /// Creates menu strip
+        /// </summary>
         public void CreateSplitContainer()
         {
             splitContainer = new SplitContainer()
@@ -97,6 +131,9 @@ namespace SMM.Addons
             splitContainer.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
         }
 
+        /// <summary>
+        /// Creates tree view of projects
+        /// </summary>
         public void CreateTreeView()
         {
             treeView = new TreeView()
@@ -109,6 +146,9 @@ namespace SMM.Addons
             treeView.MouseDown += (sender, args) => treeView.SelectedNode = treeView.GetNodeAt(args.X, args.Y);
         }
 
+        /// <summary>
+        /// Creates image list and adds images to it
+        /// </summary>
         public void CreateImageList()
         {
             treeViewImageList = new ImageList();
@@ -123,6 +163,9 @@ namespace SMM.Addons
             treeView.ImageList = treeViewImageList;
         }
 
+        /// <summary>
+        /// Creates panel al right part of the screen
+        /// </summary>
         public void CreatePanel()
         {
             splitContainer.Panel2.AutoScroll = true;
@@ -134,6 +177,9 @@ namespace SMM.Addons
 
         #region Orther
 
+        /// <summary>
+        /// Get version of the application
+        /// </summary>
         void GetVersion()
         {
             Assembly assembly = Assembly.GetExecutingAssembly();
