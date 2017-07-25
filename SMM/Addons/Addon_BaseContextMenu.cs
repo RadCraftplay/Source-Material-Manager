@@ -250,21 +250,13 @@ namespace SMM.Addons
             v.ShowDialog();
         }
 
-        private void ExportProjectContextStripMenuItem_Click(object sender, EventArgs e)
+        private async void ExportProjectContextStripMenuItem_Click(object sender, EventArgs e)
         {
             SaveFileDialog sfd = new SaveFileDialog();
             sfd.Filter = "Zip file|*.zip";
             if (sfd.ShowDialog() == DialogResult.OK)
             {
-
-                //Thread t = new Thread(() => PakZip(sfd.FileName))
-                //{
-                //    Name = "ZIP_PACKING",
-                //    IsBackground = false
-                //};
-                //t.SetApartmentState(ApartmentState.MTA);
-                //t.Start();
-                PakZip(sfd.FileName);
+                await Task.Run(() => PakZip(sfd.FileName));
             }
         }
 
@@ -290,7 +282,7 @@ namespace SMM.Addons
         
         #region Opening Files
 
-        void OpenFile()
+        async void OpenFile()
         {
             if (!(projectTreeView.SelectedNode.ImageIndex == 0))
             {
@@ -311,14 +303,20 @@ namespace SMM.Addons
                 }
                 else if (projectTreeView.SelectedNode.Text.EndsWith(".vtf"))
                 {
-                    LoadVtf l = new LoadVtf(LoadVTF);
-                    l.Invoke(Addon_BaseControls.treeView.SelectedNode.FullPath);
+                    string path = Addon_BaseControls.treeView.SelectedNode.FullPath;
+                    await Task.Run(() => LoadVTF(path));
+
+                    //Create control
+                    VTFViewer v = new VTFViewer();
+                    Addon_BaseControls.panel.Controls.Add(v);
+                    v.Dock = DockStyle.Fill;
+                    v.pictureBox1.Image = vtfImg;
                 }
                 else { } //Does nothing
             }
         }
 
-        delegate void LoadVtf(string filename);
+        Image vtfImg;
 
         unsafe void LoadVTF(string filename)
         {
@@ -327,7 +325,7 @@ namespace SMM.Addons
             VtfLib.vlInitialize();
             VtfLib.vlCreateImage(&u);
             VtfLib.vlBindImage(u);
-            VtfLib.vlImageLoad(Addon_BaseControls.treeView.SelectedNode.FullPath, false);
+            VtfLib.vlImageLoad(filename, false);
 
             byte[] lpImageData = new byte[VtfLib.vlImageComputeImageSize(VtfLib.vlImageGetWidth(), VtfLib.vlImageGetHeight(), 1, 1, VtfLib.ImageFormat.ImageFormatRGBA8888)];
             fixed (byte* lpOutput = lpImageData)
@@ -356,10 +354,7 @@ namespace SMM.Addons
 
             VtfLib.vlShutdown();
 
-            VTFViewer v = new VTFViewer();
-            Addon_BaseControls.panel.Controls.Add(v);
-            v.Dock = DockStyle.Fill;
-            v.pictureBox1.Image = (Image)b;
+            vtfImg = (Image)b;
         }
 
         #endregion
