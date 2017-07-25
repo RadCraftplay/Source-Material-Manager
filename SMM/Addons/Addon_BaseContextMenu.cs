@@ -94,6 +94,7 @@ namespace SMM.Addons
         /// </summary>
         private void ProjectTreeView_MouseDoubleClick(object sender, MouseEventArgs e)
         {
+            //Opens file associated with node
             OpenFile();
         }
 
@@ -256,7 +257,11 @@ namespace SMM.Addons
             sfd.Filter = "Zip file|*.zip";
             if (sfd.ShowDialog() == DialogResult.OK)
             {
-                await Task.Run(() => PakZip(sfd.FileName));
+                //Pak zip archive
+                TreeNode n = projectTreeView.SelectedNode;
+                await Task.Run(() => PakZip(sfd.FileName, n));
+                //Inform user that operation finished
+                MessageBox.Show("Exporting finished!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
@@ -377,10 +382,10 @@ namespace SMM.Addons
             Addon_BaseControls.panel.Controls.Clear();
         }
 
-        void PakZip(string filename)
+        void PakZip(string filename, TreeNode n)
         {
             ZipFile f = new ZipFile(filename);
-            TreeNode n = projectTreeView.SelectedNode;
+            //TreeNode n = projectTreeView.SelectedNode;
             List<FileEntry> e = new List<FileEntry>();
 
             GenerateList(e, n, n.FullPath);
