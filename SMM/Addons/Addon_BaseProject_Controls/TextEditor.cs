@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace SMM.Addons.Addon_BaseProject_Controls
@@ -25,7 +26,7 @@ namespace SMM.Addons.Addon_BaseProject_Controls
     {
         string FILENAME { get; set; }
         bool IsSaved = true;
-        bool FileWasLoaded = false;
+        Stack<string> undoList = new Stack<string>();
 
         public TextEditor(string filename)
         {
@@ -36,28 +37,27 @@ namespace SMM.Addons.Addon_BaseProject_Controls
             IsSaved = true;
         }
 
-        private void TextEditor_Load(object sender, EventArgs e)
-        {
-            
-        }
-
         private void reloadFromDiscToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Do you want to reload file? All changes will be lost", "Are you sure?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+            if (!IsSaved)
             {
-                richTextBox1.LoadFile(FILENAME, RichTextBoxStreamType.PlainText);
-                FileWasLoaded = true;
-                IsSaved = true;
+                if (MessageBox.Show("Do you want to reload file? All changes will be lost", "Are you sure?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+                {
+                    richTextBox1.LoadFile(FILENAME, RichTextBoxStreamType.PlainText);
+                    IsSaved = true;
+                }
             }
         }
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show(string.Format("Do you want to overwrite file {0}{1}{0}?", '"', FILENAME), "Are you sure?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+            if (!IsSaved)
             {
-                richTextBox1.SaveFile(FILENAME, RichTextBoxStreamType.PlainText);
-                FileWasLoaded = true;
-                IsSaved = true;
+                if (MessageBox.Show(string.Format("Do you want to overwrite file {0}{1}{0}?", '"', FILENAME), "Are you sure?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+                {
+                    richTextBox1.SaveFile(FILENAME, RichTextBoxStreamType.PlainText);
+                    IsSaved = true;
+                }
             }
         }
 
@@ -68,12 +68,24 @@ namespace SMM.Addons.Addon_BaseProject_Controls
                     richTextBox1.SaveFile(FILENAME, RichTextBoxStreamType.PlainText);
         }
 
-        private void richTextBox1_TextChanged(object sender, EventArgs e)
+        private void undoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (FileWasLoaded)
-                IsSaved = false;
-            else
-                FileWasLoaded = true;
+            if (undoList.Count > 0)
+                richTextBox1.Text = undoList.Pop();
+
+            if (undoList.Count == 0)
+                undoToolStripMenuItem.Enabled = false;
+        }
+
+        private void richTextBox1_KeyDown(object sender, KeyEventArgs e)
+        {
+            IsSaved = false;
+
+            if (e.KeyCode == Keys.Space)
+            {
+                undoList.Push(richTextBox1.Text);
+                undoToolStripMenuItem.Enabled = true;
+            }
         }
     }
 }
