@@ -104,6 +104,7 @@ namespace SMM.Addons
         /// </summary>
         public void CreateMenuStrip()
         {
+            //Create menu strip
             menuStrip = new MenuStrip()
             {
                 Location = new System.Drawing.Point(0, 0),
@@ -111,7 +112,10 @@ namespace SMM.Addons
                 Name = "menuStrip",
                 Text = "menuStrip1"
             };
+            //Add it to form
             f.Controls.Add(menuStrip);
+
+            //Set DockStyle to Top
             menuStrip.Dock = DockStyle.Top;
         }
 
@@ -120,6 +124,7 @@ namespace SMM.Addons
         /// </summary>
         public void CreateSplitContainer()
         {
+            //Create split container
             splitContainer = new SplitContainer()
             {
                 Location = new System.Drawing.Point(12, 27),
@@ -127,7 +132,10 @@ namespace SMM.Addons
                 FixedPanel = FixedPanel.Panel1,
                 SplitterDistance = 200
             };
+            //Add it to form
             f.Controls.Add(splitContainer);
+
+            //Anchor container to all sides of control
             splitContainer.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
         }
 
@@ -136,13 +144,22 @@ namespace SMM.Addons
         /// </summary>
         public void CreateTreeView()
         {
+            //Create tree view
             treeView = new TreeView()
             {
                 Location = new System.Drawing.Point(0, 0),
                 Size = new System.Drawing.Size(10, 10)
             };
+            //Add tree view to left side of split container
             splitContainer.Panel1.Controls.Add(treeView);
+
+            //Set it's dock to Fill
+            //It will fill entire left panel
             treeView.Dock = DockStyle.Fill;
+            //Add event
+            //Mouse button down
+            //Select node when user clicks on control
+            //Fix for winforms (or improvement)
             treeView.MouseDown += (sender, args) => treeView.SelectedNode = treeView.GetNodeAt(args.X, args.Y);
         }
 
@@ -151,8 +168,10 @@ namespace SMM.Addons
         /// </summary>
         public void CreateImageList()
         {
+            //Create image list
             treeViewImageList = new ImageList();
 
+            //Add images to it
             treeViewImageList.Images.Add(TreeViewIcons.folder_horizontal);
             treeViewImageList.Images.Add(TreeViewIcons.folder_horizontal_open);
             treeViewImageList.Images.Add(TreeViewIcons.document);
@@ -160,6 +179,7 @@ namespace SMM.Addons
             treeViewImageList.Images.Add(TreeViewIcons.document_code);
             treeViewImageList.Images.Add(TreeViewIcons.image);
 
+            //Use this image list in tree view
             treeView.ImageList = treeViewImageList;
         }
 
@@ -168,8 +188,13 @@ namespace SMM.Addons
         /// </summary>
         public void CreatePanel()
         {
+            //Enable autoscroll in panel
+            //If control inside of panel will be to small, scroll bars will appear
             splitContainer.Panel2.AutoScroll = true;
+
+            //Set background color of panel
             splitContainer.Panel2.BackColor = System.Drawing.Color.White;
+            //Use panel in split container
             panel = splitContainer.Panel2;
         }
 
@@ -182,6 +207,7 @@ namespace SMM.Addons
         /// </summary>
         void GetVersion()
         {
+            //Get version of assembly
             Assembly assembly = Assembly.GetExecutingAssembly();
             FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
             SMMVersion = fvi.FileVersion;
