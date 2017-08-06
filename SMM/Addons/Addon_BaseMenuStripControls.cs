@@ -52,13 +52,15 @@ namespace SMM.Addons
 
         public void Initialize()
         {
+            //Get menuStrip
             menuStrip = Addon_BaseControls.menuStrip;
+            //Add tool strip menu items
             AddToolStripItems();
         }
 
         public void Shutdown()
         {
-            
+            //Don't do anything
         }
 
         #endregion
@@ -70,6 +72,7 @@ namespace SMM.Addons
         /// </summary>
         public void AddToolStripItems()
         {
+            //Create menu strip items
             fileMenuStripItem = new ToolStripMenuItem()
             {
                 Name = "fileMenuStripItem",
@@ -89,6 +92,7 @@ namespace SMM.Addons
                 Text = "Options"
             };
 
+            //Add them to menu strip
             menuStrip.Items.AddRange(new ToolStripItem[] { fileMenuStripItem, editMenuStripItem, optionsMenuStripItem });
         }
 
