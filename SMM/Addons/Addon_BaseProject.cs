@@ -23,6 +23,7 @@ using System.Xml.Serialization;
 
 namespace SMM.Addons
 {
+    //TODO: Add more comments to code
     public class Addon_BaseProject : IAddon
     {
         #region Variables

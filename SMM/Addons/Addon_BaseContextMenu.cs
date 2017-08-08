@@ -217,7 +217,7 @@ namespace SMM.Addons
         {
             //Create open file dialog
             OpenFileDialog ofd = new OpenFileDialog();
-            ofd.Filter = "All supported files|*.txt;*.vmt;*.vtf";
+            ofd.Filter = "All supported files|*.txt;*.vmt;*.vtf|All files|*.*";
             ofd.Multiselect = true;
 
             //Show dialog

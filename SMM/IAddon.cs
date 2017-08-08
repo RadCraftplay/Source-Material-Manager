@@ -36,6 +36,7 @@ namespace SMM
         void Shutdown();
     }
 
+    //TODO: Move AddonInfo to separated class
     public class AddonInfo
     {
         public string Name;
